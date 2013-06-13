@@ -181,6 +181,42 @@ class Sharrre_Wordpress_plugin
 						echo '},';
 					}
 
+					echo 'buttons: {';
+						if($this->googlePlusOptions)
+						{
+							echo 'googlePlus: ' . $this->googlePlusOptions . ',';
+						}
+						if($this->facebookOptions)
+						{
+							echo 'facebook: ' . $this->facebookOptions . ',';
+						}
+						if($this->twitterOptions)
+						{
+							echo 'twitter: ' . $this->twitterOptions . ',';
+						}
+						if($this->diggOptions)
+						{
+							echo 'digg: ' . $this->diggOptions . ',';
+						}
+						if($this->deliciousOptions)
+						{
+							echo 'delicious: ' . $this->deliciousOptions . ',';
+						}
+						if($this->stumbleuponOptions)
+						{
+							echo 'stumbleupon: ' . $this->stumbleuponOptions . ',';
+						}
+						if($this->linkedinOptions)
+						{
+							echo 'linkedin: ' . $this->linkedinOptions . ',';
+						}
+						if($this->pinterestOptions)
+						{
+							echo 'pinterest: ' . $this->pinterestOptions . ',';
+						}
+
+					echo '},';
+
 					if($url != '')
 					{
 						printf("url: '%s',", $url);
