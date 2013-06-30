@@ -29,14 +29,12 @@ Author URI: http:/www.paulund.co.uk
  * GNU General Public License for more details.
  * **********************************************************************
  */
-if(is_admin())
+if(!is_admin())
 {
-	new Sharrre_Wordpress_Admin();
-} else {
 	new Sharrre_Wordpress_plugin();
 }
 
-class Sharrre_Wordpress_plugin
+class Sharrre_Wordpress_Plugin
 {
 	private $buttons = array(
 						'googlePlus',
@@ -60,109 +58,62 @@ class Sharrre_Wordpress_plugin
 
 	public function __construct()
 	{
+		add_action( 'wp_enqueue_scripts', array(&$this, 'add_scripts') );
 		add_action( 'wp_enqueue_scripts', array(&$this, 'add_styles') );
+	}
+
+	public function add_scripts()
+	{
+		wp_enqueue_script( 'sharrre', plugins_url( 'sharrre/jquery.sharrre.min.js', __FILE__ ) , array('jquery') );
 	}
 
 	public function add_styles()
 	{
-		wp_enqueue_script( 'sharrre', plugins_url( 'sharrre/jquery.sharrre.min.js', __FILE__ ) , array('jquery') );
+		wp_enqueue_style( 'sharrre-button-style', plugins_url( 'css/styling.css', __FILE__ ) );
 	}
 
 	public function google_plus_options( $options )
 	{
 		$this->googlePlusOptions = json_encode($options);
-		// 	googlePlus : {  //http://www.google.com/webmasters/+1/button/
-		//   url: '',  //if you need to personnalize button url
-		//   size: 'medium',
-		//   lang: 'en-US',
-		//   annotation: ''
-		// },
 	}
 
 	public function facebook_button( $options )
 	{
 		$this->facebookOptions = json_encode($options);
-
-		// facebook: { //http://developers.facebook.com/docs/reference/plugins/like/
-		//   url: '',  //if you need to personalize url button
-		//   action: 'like',
-		//   layout: 'button_count',
-		//   width: '',
-		//   send: 'false',
-		//   faces: 'false',
-		//   colorscheme: '',
-		//   font: '',
-		//   lang: 'en_US'
-		// },
 	}
 
 	public function twitter_button( $options )
 	{
 		$this->twitterOptions = json_encode($options);
 
-		// twitter: {  //http://twitter.com/about/resources/tweetbutton
-		//   url: '',  //if you need to personalize url button
-		//   count: 'horizontal',
-		//   via: '',
-		//   hashtags: '',
-		//   related: '',
-		//   lang: 'en'
-		// },
 	}
 
 	public function digg_button( $options )
 	{
 		$this->diggOptions = json_encode($options);
-
-		// digg: { //http://about.digg.com/downloads/button/smart
-		//   url: '',  //if you need to personalize url button
-		//   type: 'DiggCompact'
-		// },
 	}
 
 	public function delicious_button( $options )
 	{
 		$this->deliciousOptions = json_encode($options);
-
-		// delicious: {
-		//   url: '',  //if you need to personalize url button
-		//   size: 'medium' //medium or tall
-		// },
 	}
 
 	public function stumbleupon_button( $options )
 	{
 		$this->stumbleuponOptions = json_encode($options);
-
-		// stumbleupon: {  //http://www.stumbleupon.com/badges/
-		//   url: '',  //if you need to personalize url button
-		//   layout: '1'
-		// },
 	}
 
 	public function linkedin_button( $options )
 	{
 		$this->linkedinOptions = json_encode($options);
-
-		// linkedin: {  //http://developer.linkedin.com/plugins/share-button
-		//   url: '',  //if you need to personalize url button
-		//   counter: ''
-		// },
 	}
 
 	public function pinterest_button( $options )
 	{
 		$this->pinterestOptions = json_encode($options);
-
-		// pinterest: { //http://pinterest.com/about/goodies/
-		//   url: '',  //if you need to personalize url button
-		//   media: '',
-		//   description: '',
-		//   layout: 'horizontal'
-		// }
 	}
 
-	public function add_button($id, array $buttons, $url)
+	public function add_button($id, array $buttons = NULL, $url = NULL)
 	{
 		?>
 			<script>
