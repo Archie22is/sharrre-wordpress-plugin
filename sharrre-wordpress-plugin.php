@@ -85,7 +85,6 @@ class Sharrre_Wordpress_Plugin
 	public function twitter_button( $options )
 	{
 		$this->twitterOptions = json_encode($options);
-
 	}
 
 	public function digg_button( $options )
@@ -113,14 +112,20 @@ class Sharrre_Wordpress_Plugin
 		$this->pinterestOptions = json_encode($options);
 	}
 
-	public function add_button($id, array $buttons = NULL, $url = NULL)
+	public function add_button(array $buttons = NULL, $url = NULL)
 	{
+        $id = 'sharrre-buttons';
+        if(is_null($url))
+        {
+            $url = get_permalink();
+        }
 		?>
+            <div id="<?php echo $id; ?>"></div>
 			<script>
 				jQuery('#<?php echo $id; ?>').sharrre({
 
 				<?php
-					if(count($buttons) > 0)
+					if(!empty($buttons))
 					{
 						echo 'share: {';
 
