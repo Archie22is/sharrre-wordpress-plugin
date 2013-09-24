@@ -3,7 +3,7 @@
 Plugin Name: Sharrre WordPress Plugin
 Plugin URI: http://www.paulund.co.uk
 Description: A WordPress plugin that will allow you to create your own share buttons using the jQuery Plugin Sharrre
-Version: 1.1
+Version: 1.2
 Author: Paul Underwood
 Author URI: http:/www.paulund.co.uk
 */
@@ -112,17 +112,38 @@ class Sharrre_Wordpress_Plugin
 		$this->pinterestOptions = json_encode($options);
 	}
 
-	public function add_button(array $buttons = NULL, $url = NULL)
+    /**
+     * Add the button to the page
+     *
+     * @param array  $buttons - Array of buttons you want to display
+     * @param String $div_id  - If the div id is null then we create a new div. If the div id is not null
+     *                          then we assume that a div has been created for the buttons
+     * @param String $url     - The url you want to share, if NULL then we get the current post URL
+     */
+	public function add_button(array $buttons, $div_id = NULL, $url = NULL, $options = array())
 	{
-        $id = 'sharrre-buttons';
+        $optionsDefaults = array('enableHover' => true, 'enableCounter' => true, 'enableTracking' => false);
+
+        $buttonOptions = wp_parse_args( $options, $optionsDefaults );
+
         if(is_null($url))
         {
-            $url = get_permalink();
+            $currentPostUrl = get_permalink();
+
+            if(!empty($currentPostUrl))
+            {
+                $url = $currentPostUrl;
+            }
+        }
+
+        if(is_null($div_id))
+        {
+            $div_id = 'sharrre_button';
+            printf('<div id="%s"></div>', $div_id);
         }
 		?>
-            <div id="<?php echo $id; ?>"></div>
 			<script>
-				jQuery('#<?php echo $id; ?>').sharrre({
+				jQuery('#<?php echo $div_id; ?>').sharrre({
 
 				<?php
 					if(!empty($buttons))
@@ -173,7 +194,22 @@ class Sharrre_Wordpress_Plugin
 
 					echo '},';
 
-					if($url != '')
+                    if(!$buttonOptions['enableHover'])
+                    {
+                        echo 'enableHover: false,';
+                    }
+
+                    if(!$buttonOptions['enableCounter'])
+                    {
+                        echo 'enableCounter: false,';
+                    }
+
+                    if($buttonOptions['enableTracking'])
+                    {
+                        echo 'enableTracking: true,';
+                    }
+
+					if(!empty($url))
 					{
 						printf("url: '%s',", $url);
 					}
