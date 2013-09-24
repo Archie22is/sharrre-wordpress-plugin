@@ -3,7 +3,7 @@
 Plugin Name: Sharrre WordPress Plugin
 Plugin URI: http://www.paulund.co.uk
 Description: A WordPress plugin that will allow you to create your own share buttons using the jQuery Plugin Sharrre
-Version: 1.0
+Version: 1.1
 Author: Paul Underwood
 Author URI: http:/www.paulund.co.uk
 */
