@@ -143,6 +143,7 @@ class Sharrre_Wordpress_Plugin
         }
 		?>
 			<script>
+                jQuery( document ).ready(function() {
 				jQuery('#<?php echo $div_id; ?>').sharrre({
 
 				<?php
@@ -215,6 +216,7 @@ class Sharrre_Wordpress_Plugin
 					}
 				?>
 				});
+            });
 			</script>
 		<?php
 	}
