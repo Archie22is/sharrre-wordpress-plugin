@@ -1,0 +1,15 @@
+{
+	"name"       : "paulund/sharrre-wordpress-plugin",
+	"description": "A WordPress plugin you can use to display sharrre buttons in your WordPress site.",
+	"type"       : "wordpress-plugin",
+	"license"    : "GPL-2.0+",
+	"authors"    : [
+		{
+			"name"    : "Code For The People",
+			"homepage": "http://codeforthepeople.com/"
+		}
+	],
+	"require": {
+		"composer/installers": "~1.0"
+	}
+}
